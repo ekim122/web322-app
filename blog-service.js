@@ -5,46 +5,76 @@ var categories = [];
 
 module.exports.initialize = function(){
     return new Promise (function(resolve,reject){
-        try{
-            fs.readFile('./data/posts.json', 'utf8', (err, data) => {
-                if (err) throw err;
+        fs.readFile('./data/posts.json', 'utf8', (err, data) => {
+            if (err){
+                console.log("Initialization Failed")
+                reject(err)
+            }else{
                 posts = JSON.parse(data);
-                //console.log(data);
-            });
+                //console.log(posts);
+                console.log("Initialization Success")
+                resolve(posts)
+            }
+        });
+
+        fs.readFile('./data/categories.json', 'utf8', (err, data) => {
+            if (err){
+                console.log("Initialization Failed")
+                reject(err)
+            }else{
+                categories = JSON.parse(data)
+                //console.log(categories);
+                console.log("Initialization Success")
+                resolve(categories)
+            }
+        });
+
+
+        // try{
+        //     fs.readFile('./data/posts.json', 'utf8', (err, data) => {
+        //         if (err) throw err;
+        //         posts = JSON.parse(data);
+        //         //console.log(data);
+        //     });
     
-            fs.readFile('./data/categories.json', 'utf8', (err, data) => {
-                if (err) throw err;
-                categories = JSON.parse(data);
-                //console.log(data);
-            });
-            console.log("Initialized")
-            resolve("Initialization Successful")
-        }catch{
-            console.log("Failed");
-            reject("Failed Initialization")
-        }
+        //     fs.readFile('./data/categories.json', 'utf8', (err, data) => {
+        //         if (err) throw err;
+        //         categories = JSON.parse(data);
+        //         //console.log(data);
+        //     });
+        //     console.log("Initialized")
+        //     resolve("Initialization Successful")
+        // }catch{
+        //     console.log("Failed");
+        //     reject("Failed Initialization")
+        // }
     })
 };
 
 module.exports.getAllPosts = function(){
     return new Promise (function(resolve,reject){
         if(posts.length === 0){
-            reject("No Results Returned");
+            reject("No Results Returned")
+        }else{
+            resolve(posts)
         }
-        resolve(posts);
+        //resolve(posts);
     })
 };
 
 module.exports.getPublishedPosts=function(){ //need to edit
     return new Promise (function(resolve,reject){
+        var tempPosts = [];
         if(posts.length === 0){
-            reject("No Results Returned");
+            reject("No Results Returned")
         }else{
             for (var i = 0; i < posts.length; i++){
                 if (posts[i].published == true){
-                    resolve(posts[i]);
+                    tempPosts.push(posts[i])
+                    //resolve(posts[i])
                 }
             }
+            resolve(tempPosts)
         }
         //resolve(posts);
     })
@@ -53,8 +83,10 @@ module.exports.getPublishedPosts=function(){ //need to edit
 module.exports.getCategories = function(){
     return new Promise (function(resolve,reject){
         if(categories.length === 0){
-            reject("No Results Returned");
+            reject("No Results Returned")
+        }else{
+            resolve(categories)
         }
-        resolve(categories);
+        //resolve(categories);
     })
 };
