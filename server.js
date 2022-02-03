@@ -7,7 +7,7 @@
 *
 *  Online (Heroku) URL: https://thawing-bayou-56438.herokuapp.com/
 *
-*  GitHub Repository URL: ______________________________________________________
+*  GitHub Repository URL: https://github.com/ekim122/web322-app
 *
 ********************************************************************************/ 
 
