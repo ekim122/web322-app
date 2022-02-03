@@ -5,7 +5,7 @@
 * 
 *  Name: Eun Dong Kim    Student ID: 144692209   Date: Feb 02, 2022
 *
-*  Online (Heroku) URL: ________________________________________________________
+*  Online (Heroku) URL: https://thawing-bayou-56438.herokuapp.com/
 *
 *  GitHub Repository URL: ______________________________________________________
 *
