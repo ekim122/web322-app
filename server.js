@@ -1,3 +1,16 @@
+/*********************************************************************************
+*  WEB322 – Assignment 02
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
+*  (including 3rd party web sites) or distributed to other students.
+* 
+*  Name: Eun Dong Kim    Student ID: 144692209   Date: Feb 02, 2022
+*
+*  Online (Heroku) URL: ________________________________________________________
+*
+*  GitHub Repository URL: ______________________________________________________
+*
+********************************************************************************/ 
+
 var express = require("express");
 var blogService = require("./blog-service.js");
 var app = express();
@@ -21,42 +34,37 @@ var path = require("path");
 // setup another route to listen on /about
 app.get("/about", function(req,res){
     res.sendFile(path.join(__dirname,"/views/about.html"));
-    //res.sendFile(app.join(__dirname, "/views/about.html"));
 });
 
 // setup another route to listen on /blog
 app.get("/blog", function(req,res){
-    //res.send(blog.join(__filename,"blog-service.js"));
-    //res.send("TODO: get all posts who have published==true");
+    //TODO: get all posts who have published==true
     blogService.getPublishedPosts().then((data)=>{
         res.json(data)
-    }).catch((error)=>{
-        console.log(error)
-        //res.status(404).send("Error!")
+    }).catch((err)=>{
+        console.log(err)
         res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
 
 // setup another route to listen on /posts
 app.get("/posts", function(req,res){
-    //res.send("TODO: get all posts within the posts.json file");
+    //TODO: get all posts within the posts.json file
     blogService.getAllPosts().then((data)=>{
         res.json(data)
-    }).catch((error)=>{
-        console.log(error)
-        //res.status(404).send("Error!")
+    }).catch((err)=>{
+        console.log(err)
         res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
 
 // setup another route to listen on /categories
 app.get("/categories", function(req,res){
-    //res.send("TODO: get all posts within the categories.json file");
+    //TODO: get all posts within the categories.json file
     blogService.getCategories().then((data)=>{
         res.json(data)
-    }).catch((error)=>{
-        console.log(error)
-        //res.status(404).send("Error!")
+    }).catch((err)=>{
+        console.log(err)
         res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
@@ -67,11 +75,9 @@ app.use(function(req,res){
 });
 
 // setup http server to listen on HTTP_PORT
-blogService.initialize()
-.then(()=>{
-    //console.log()
+blogService.initialize().then(()=>{
     app.listen(HTTP_PORT, onHttpStart);
-})
-.catch(err=>{
+}).catch((err)=>{
     console.log(err);
+    res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
 })
