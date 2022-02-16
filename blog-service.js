@@ -111,3 +111,19 @@ module.exports.getPostsByMinDate=function(minDate){
         resolve(tempPost)
     })
 }
+
+module.exports.getPostById=function(id){
+    return new Promise (function(resolve,reject) {
+        var tempPost
+        for (var i = 0; i < posts.length; i++){
+            if (posts[i].id == id){
+                tempPost = posts[i]
+            }
+        }
+        if (!tempPost){
+            var error = "ID Result Not Found"
+            reject({message:error});
+        }
+        resolve(tempPost)
+    })
+}
