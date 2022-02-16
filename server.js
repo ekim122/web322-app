@@ -24,6 +24,52 @@ const multer = require("multer");
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
 app.use(express.static('public'));
+cloudinary.config({
+    // cloud_name: 'deqprwsd4',
+    // api_key: '958216884412492',
+    // api_secret: 'EvrlRqwb2NcVjIqFCCPvSRHoX_k',
+    // secure: true
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+    secure: true
+});
+//Image Upload
+const upload = multer(); // no { storage: storage } since we are not using disk storage
+app.post("/posts/add", upload.single("featureImage"), function (req, res) {
+
+    let streamUpload = (req) => {
+        return new Promise((resolve, reject) => {
+            let stream = cloudinary.uploader.upload_stream(
+                (error, result) => {
+                if (result) {
+                    resolve(result);
+                } else {
+                    reject(error);
+                }
+                }
+            );
+    
+            streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+    };
+    
+    async function upload(req) {
+        let result = await streamUpload(req);
+        console.log(result);
+        return result;
+    }
+    
+    upload(req).then((uploaded)=>{
+        req.body.featureImage = uploaded.url;
+    
+        // TODO: Process the req.body and add it as a new Blog Post before redirecting to /posts
+        blogService.addPost(req.body).then(()=>{
+            res.redirect("/posts")
+        })
+    });
+    
+})
 
 //app.use(express.static('public'));
 
