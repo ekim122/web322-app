@@ -14,13 +14,23 @@
 var express = require("express");
 var blogService = require("./blog-service.js");
 var app = express();
+//const HTTP_PORT = process.env.PORT //|| 8080;
+var path = require("path");
+const env = require("dotenv")
+env.config()
+const HTTP_PORT = process.env.PORT //|| 8080;
+const onHttpStart = () => console.log(`Express http server listening on: ${HTTP_PORT}`)
+const multer = require("multer");
+const cloudinary = require('cloudinary').v2
+const streamifier = require('streamifier')
+app.use(express.static('public'));
 
-var HTTP_PORT = process.env.PORT || 8080;
+//app.use(express.static('public'));
 
 // call this function after the http server starts listening for requests
-function onHttpStart() {
-  console.log("Express http server listening on: " + HTTP_PORT);
-}
+// function onHttpStart() {
+//   console.log("Express http server listening on: " + HTTP_PORT);
+// }
 
 app.use(express.static('public'));
 
