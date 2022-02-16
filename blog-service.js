@@ -3,12 +3,13 @@ const fs = require("fs");
 var posts = [];
 var categories = [];
 
+
+//initialize blog by reading/loading files
 module.exports.initialize = function(){
     return new Promise (function(resolve,reject){
         fs.readFile('./data/posts.json', 'utf8', (err, data) => {
             if (err){
                 console.log("Unable to read posts file")
-                //reject(err)
                 reject("Unable to read posts file")
             }else{
                 posts = JSON.parse(data)
@@ -20,7 +21,6 @@ module.exports.initialize = function(){
         fs.readFile('./data/categories.json', 'utf8', (err, data) => {
             if (err){
                 console.log("Unable to read categories file")
-                //reject(err)
                 reject("Unable to read categories file")
             }else{
                 categories = JSON.parse(data)
@@ -31,6 +31,8 @@ module.exports.initialize = function(){
     })
 };
 
+
+// get all posts
 module.exports.getAllPosts = function(){
     return new Promise (function(resolve,reject){
         if(posts.length === 0){
@@ -41,6 +43,8 @@ module.exports.getAllPosts = function(){
     })
 };
 
+
+// get 'published = yes' posts only
 module.exports.getPublishedPosts=function(){
     return new Promise (function(resolve,reject){
         var tempPosts = [];
@@ -57,6 +61,8 @@ module.exports.getPublishedPosts=function(){
     })
 };
 
+
+// get all categories
 module.exports.getCategories = function(){
     return new Promise (function(resolve,reject){
         if(categories.length === 0){
@@ -66,6 +72,9 @@ module.exports.getCategories = function(){
         }
     })
 };
+
+
+// add post
 module.exports.addPost=function(postData){
     return new Promise (function(resolve,reject){
         if (postData.published === undefined){
@@ -79,6 +88,8 @@ module.exports.addPost=function(postData){
     })
 };
 
+
+// get posts based on category num
 module.exports.getPostsByCategory=function(category){
     return new Promise (function(resolve,reject) {
         var tempPost=[];
@@ -95,12 +106,13 @@ module.exports.getPostsByCategory=function(category){
     })
 }
 
+
+// get posts based on min date
 module.exports.getPostsByMinDate=function(minDate){
     return new Promise (function(resolve,reject) {
         var tempPost=[]
         for (var i = 0; i < posts.length; i++){
             if(new Date(posts[i].postDate) >= new Date(minDate)){
-                //console.log("The postDate value is greater than minDateStr")
                 tempPost.push(posts[i]);
             }            
         }
@@ -112,6 +124,8 @@ module.exports.getPostsByMinDate=function(minDate){
     })
 }
 
+
+// get specific post id
 module.exports.getPostById=function(id){
     return new Promise (function(resolve,reject) {
         var tempPost
