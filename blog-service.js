@@ -94,3 +94,20 @@ module.exports.getPostsByCategory=function(category){
         resolve(tempPost)
     })
 }
+
+module.exports.getPostsByMinDate=function(minDate){
+    return new Promise (function(resolve,reject) {
+        var tempPost=[]
+        for (var i = 0; i < posts.length; i++){
+            if(new Date(posts[i].postDate) >= new Date(minDate)){
+                //console.log("The postDate value is greater than minDateStr")
+                tempPost.push(posts[i]);
+            }            
+        }
+        if (tempPost.length === 0){
+            var error = "Date Result Not Found"
+            reject({message: error});
+        }
+        resolve(tempPost)
+    })
+}
