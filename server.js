@@ -102,6 +102,15 @@ app.get("/blog", function(req,res){
         res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
+// setup "/post/value" route
+app.get("/post/:id", function (req, res){
+    blogService.getPostById(req.params.id).then((data)=>{
+        res.json(data)
+    }).catch((err)=>{
+        console.log(err)
+        res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+    })
+})
 
 // setup another route to listen on /posts
 app.get("/posts", function(req,res){
