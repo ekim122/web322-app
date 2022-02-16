@@ -133,6 +133,10 @@ app.get("/categories", function(req,res){
         res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
+// setup another route to display addPost
+app.get("/posts/add", function(req,res){
+    res.sendFile(path.join(__dirname, "/views/addPost.html"));
+});
 
 // setup another route to display 404
 app.use(function(req,res){
