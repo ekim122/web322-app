@@ -78,3 +78,19 @@ module.exports.addPost=function(postData){
         resolve(posts)
     })
 };
+
+module.exports.getPostsByCategory=function(category){
+    return new Promise (function(resolve,reject) {
+        var tempPost=[];
+        for (var i = 0; i < posts.length; i++){
+            if (posts[i].category == category){
+                tempPost.push(posts[i]);
+            }
+        }
+        if (tempPost.length === 0){
+            var error = "Category Result Not Found"
+            reject({message: error});
+        }
+        resolve(tempPost)
+    })
+}
