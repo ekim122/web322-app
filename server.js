@@ -24,6 +24,10 @@ const multer = require("multer");
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
 app.use(express.static('public'));
+
+const exphbs = require("express-handlebars");
+app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
 // ====================================================================
 
 
