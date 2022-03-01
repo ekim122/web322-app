@@ -194,10 +194,12 @@ app.get("/posts", function(req,res){
 app.get("/categories", function(req,res){
     //TODO: get all posts within the categories.json file
     blogService.getCategories().then((data)=>{
-        res.json(data)
+        //res.json(data)
+        res.render("categories", {categories: data});
     }).catch((err)=>{
-        console.log(err)
-        res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+        res.render("categories", {message: "no results"});
+        //console.log(err)
+        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
 // ====================================================================
