@@ -24,6 +24,7 @@ const multer = require("multer");
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
 app.use(express.static('public'));
+const stripJs = require('strip-js');
 
 const exphbs = require("express-handlebars");
 app.engine('.hbs', exphbs.engine({ extname: '.hbs',
@@ -40,7 +41,12 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                                 if (lvalue != rvalue) {
                                                     return options.inverse(this);
                                                 } else {
-                                                    return options.fn(this);}}
+                                                    return options.fn(this);}},
+
+                                            safeHTML: function(context){
+                                                return stripJs(context);
+                                            }
+                                                    
                                             }}));
 app.set('view engine', '.hbs');
 // ====================================================================
