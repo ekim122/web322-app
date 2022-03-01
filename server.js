@@ -156,27 +156,33 @@ app.get("/post/:id", function (req, res){
 app.get("/posts", function(req,res){
     if (req.query.category){
         blogService.getPostsByCategory(req.query.category).then((data)=>{
-            res.json(data)
+            //res.json(data)
+            res.render("posts", {posts: data})
         }).catch((err)=>{
-            console.log(err)
-            res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+            res.render("posts", {message: "no results"});
+            //console.log(err)
+            //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
     else if(req.query.minDate){
         blogService.getPostsByMinDate(req.query.minDate).then((data)=>{
-            res.json(data)
+            //res.json(data)
+            res.render("posts", {posts: data})
         }).catch((err)=>{
-            console.log(err)
-            res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+            res.render("posts", {message: "no results"});
+            //console.log(err)
+            //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
     else{
         //TODO: get all posts within the posts.json file
         blogService.getAllPosts().then((data)=>{
-            res.json(data)
+            //res.json(data)
+            res.render("posts", {posts: data})
         }).catch((err)=>{
-            console.log(err)
-            res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+            res.render("posts", {message: "no results"});
+            //console.log(err)
+            //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
 });
