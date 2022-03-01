@@ -141,3 +141,20 @@ module.exports.getPostById=function(id){
         resolve(tempPost)
     })
 }
+
+// get category by filtering posts
+module.exports.getPublishedPostsByCategory = function(category){
+    return new Promise (function(resolve,reject){
+        var tempPosts = [];
+        if(posts.length === 0){
+            reject("No results from 'getPublishedPosts' returned")
+        }else{
+            for (var i = 0; i < posts.length; i++){
+                if (posts[i].published == true && posts[i].category == category){
+                    tempPosts.push(posts[i])
+                }
+            }
+            resolve(tempPosts)
+        }
+    })
+};
