@@ -26,7 +26,22 @@ const streamifier = require('streamifier')
 app.use(express.static('public'));
 
 const exphbs = require("express-handlebars");
-app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
+app.engine('.hbs', exphbs.engine({ extname: '.hbs',
+                                    helpers:{
+
+                                            navLink: function(url, options){
+                                            return '<li' + 
+                                                ((url == app.locals.activeRoute) ? ' class="active" ' : '') + 
+                                                '><a href="' + url + '">' + options.fn(this) + '</a></li>';},
+
+                                            equal: function (lvalue, rvalue, options) {
+                                                if (arguments.length < 3)
+                                                    throw new Error("Handlebars Helper equal needs 2 parameters");
+                                                if (lvalue != rvalue) {
+                                                    return options.inverse(this);
+                                                } else {
+                                                    return options.fn(this);}}
+                                            }}));
 app.set('view engine', '.hbs');
 // ====================================================================
 
@@ -37,6 +52,17 @@ cloudinary.config({
     api_key: process.env.CLOUD_API_KEY,
     api_secret: process.env.CLOUD_API_SECRET,
     secure: true
+});
+// ====================================================================
+
+
+
+// middleware function to fix issue that "AddPost" menu item is no longer highlited when change routes
+app.use(function(req,res,next){
+    let route = req.path.substring(1);
+    app.locals.activeRoute = (route == "/") ? "/" : "/" + route.replace(/\/(.*)/, "");
+    app.locals.viewingCategory = req.query.category;
+    next();
 });
 // ====================================================================
 
@@ -174,7 +200,8 @@ app.get("/categories", function(req,res){
 
 // setup another route to display addPost
 app.get("/posts/add", function(req,res){
-    res.sendFile(path.join(__dirname, "/views/addPost.html"));
+    //res.sendFile(path.join(__dirname, "/views/addPost.html"));
+    res.render("addPost")
 });
 // ====================================================================
 
