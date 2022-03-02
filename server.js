@@ -201,7 +201,7 @@ app.get("/post/:id", function (req, res){
         res.json(data)
     }).catch((err)=>{
         console.log(err)
-        res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 })
 // ====================================================================
@@ -270,7 +270,7 @@ app.get("/posts", function(req,res){
             res.render("posts", {posts: data})
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
-            //console.log(err)
+            console.log(err)
             //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
@@ -280,7 +280,7 @@ app.get("/posts", function(req,res){
             res.render("posts", {posts: data})
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
-            //console.log(err)
+            console.log(err)
             //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
@@ -291,7 +291,7 @@ app.get("/posts", function(req,res){
             res.render("posts", {posts: data})
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
-            //console.log(err)
+            console.log(err)
             //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
@@ -308,7 +308,7 @@ app.get("/categories", function(req,res){
         res.render("categories", {categories: data});
     }).catch((err)=>{
         res.render("categories", {message: "no results"});
-        //console.log(err)
+        console.log(err)
         //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
@@ -339,6 +339,7 @@ blogService.initialize().then(()=>{
     app.listen(HTTP_PORT, onHttpStart);
 }).catch((err)=>{
     console.log(err);
-    res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+    //res.status(500).sendFile(path.join(__dirname, "/views/404.html"));
+    res.status(500).send('Internal Server Error')
 })
 // ====================================================================
