@@ -169,6 +169,8 @@ app.get('/blog', async (req, res) => {
         // store the "posts" and "post" data in the viewData object (to be passed to the view)
         viewData.posts = posts;
         viewData.post = post;
+        // console.log(posts)
+        // console.log(post)
 
     }catch(err){
         viewData.message = "no results";
@@ -176,10 +178,11 @@ app.get('/blog', async (req, res) => {
 
     try{
         // Obtain the full list of "categories"
-        let categories = await blogData.getCategories();
+        let categories = await blogService.getCategories();
 
         // store the "categories" data in the viewData object (to be passed to the view)
         viewData.categories = categories;
+        // console.log(categories)
     }catch(err){
         viewData.categoriesMessage = "no results"
     }
