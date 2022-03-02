@@ -327,7 +327,8 @@ app.get("/posts/add", function(req,res){
 
 // setup another route to display 404
 app.use(function(req,res){
-    res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+    //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+    res.render("404")
 });
 // ====================================================================
 
