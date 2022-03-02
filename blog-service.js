@@ -10,24 +10,25 @@ module.exports.initialize = function(){
         fs.readFile('./data/posts.json', 'utf8', (err, data) => {
             if (err){
                 console.log("Unable to read posts file")
-                reject("Unable to read posts file")
+                reject(err)
             }else{
                 posts = JSON.parse(data)
                 console.log("Posts initialization successful")
-                resolve(posts)
+                //resolve(posts)
             }
         });
 
         fs.readFile('./data/categories.json', 'utf8', (err, data) => {
             if (err){
                 console.log("Unable to read categories file")
-                reject("Unable to read categories file")
+                reject(err)
             }else{
                 categories = JSON.parse(data)
                 console.log("Categories initialization successful")
-                resolve(categories)
+                //resolve(categories)
             }
         });
+        resolve(posts, categories)
     })
 };
 
@@ -144,6 +145,7 @@ module.exports.getPostById=function(id){
     })
 }
 
+
 // get category by filtering posts
 module.exports.getPublishedPostsByCategory = function(category){
     return new Promise (function(resolve,reject){
@@ -153,7 +155,6 @@ module.exports.getPublishedPostsByCategory = function(category){
         }else{
             for (var i = 0; i < posts.length; i++){
                 if (posts[i].published == true && posts[i].category == category){
-                    // console.log("added successful")
                     tempPosts.push(posts[i])
                 }
             }
