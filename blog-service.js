@@ -147,10 +147,11 @@ module.exports.getPublishedPostsByCategory = function(category){
     return new Promise (function(resolve,reject){
         var tempPosts = [];
         if(posts.length === 0){
-            reject("No results from 'getPublishedPosts' returned")
+            reject("No results from 'getPublishedPostsByCategory' returned")
         }else{
             for (var i = 0; i < posts.length; i++){
                 if (posts[i].published == true && posts[i].category == category){
+                    // console.log("added successful")
                     tempPosts.push(posts[i])
                 }
             }
