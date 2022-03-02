@@ -83,6 +83,8 @@ module.exports.addPost=function(postData){
             postData.published = true
         }
         postData.id = posts.length + 1
+        var formatDate = new Date()
+        postData.postDate = formatDate.toISOString().split('T')[0]
         posts.push(postData)
         resolve(posts)
     })
