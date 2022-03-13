@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB322 – Assignment 03
+*  WEB322 – Assignment 04
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Eun Dong Kim    Student ID: 144692209   Date: Feb 16, 2022
+*  Name: Eun Dong Kim    Student ID: 144692209   Date: Mar 03, 2022
 *
 *  Online (Heroku) URL: https://salty-caverns-73552.herokuapp.com/
 *
@@ -28,7 +28,7 @@ const stripJs = require('strip-js');
 
 const exphbs = require("express-handlebars");
 app.engine('.hbs', exphbs.engine({ extname: '.hbs',
-                                    helpers:{
+                                     helpers:{
 
                                             navLink: function(url, options){
                                             return '<li' + 
@@ -43,11 +43,11 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                                 } else {
                                                     return options.fn(this);}},
 
-                                            safeHTML: function(context){
-                                                return stripJs(context);
-                                            }
-                                                    
-                                            }}));
+                                             safeHTML: function(context){
+                                                 return stripJs(context);
+                                             }   
+                                             }
+                                }));
 app.set('view engine', '.hbs');
 // ====================================================================
 
@@ -66,7 +66,7 @@ cloudinary.config({
 // middleware function to fix issue that "AddPost" menu item is no longer highlited when change routes
 app.use(function(req,res,next){
     let route = req.path.substring(1);
-    app.locals.activeRoute = (route == "/") ? "/" : "/" + route.replace(/\/(.*)/, "");
+    app.locals.activeRoute = "/" + (isNaN(route.split('/')[1]) ? route.replace(/\/(?!.*)/, "") : route.replace(/\/(.*)/, ""));
     app.locals.viewingCategory = req.query.category;
     next();
 });
@@ -169,8 +169,6 @@ app.get('/blog', async (req, res) => {
         // store the "posts" and "post" data in the viewData object (to be passed to the view)
         viewData.posts = posts;
         viewData.post = post;
-        // console.log(posts)
-        // console.log(post)
 
     }catch(err){
         viewData.message = "no results";
@@ -182,7 +180,7 @@ app.get('/blog', async (req, res) => {
 
         // store the "categories" data in the viewData object (to be passed to the view)
         viewData.categories = categories;
-        // console.log(categories)
+
     }catch(err){
         viewData.categoriesMessage = "no results"
     }
