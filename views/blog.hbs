@@ -2,9 +2,7 @@
     <section class="main col-md-9">
         {{#if data.post}}
         <article>
-            {{!-- <h2>Post Title</h2> --}}
             <h2>{{data.post.title}}</h2>
-            {{!-- <img src="https://dummyimage.com/847x320/d9d9d9/545454.jpg" alt="feature Image" style="width:100%" /> --}}
             <img src= {{data.post.featureImage}} alt="feature Image" style="width:100%" />
             <br /><br />
             {{#safeHTML data.post.body}}{{/safeHTML}}
@@ -23,14 +21,8 @@
         <br /><br />
         {{#if data.posts}}
         <h4>Posts</h4>
-        {{!-- {{#each data.posts}} --}}
         <ul class="list-group">
             {{#each data.posts}}
-            {{!-- <a href="#" class="list-group-item">Post 1</a>
-            <a href="#" class="list-group-item">Post 2</a>
-            <a href="#" class="list-group-item">etc...</a> --}}
-            {{!-- <td><a href="/posts?category={{id}}">{{id}}</a></td> --}}
-            {{!-- <a href="/blog/{{data.id}}?category={{../viewingCategory}}" class="list-group-item">Post {{data.id}}</a> --}}
             <a href="/blog/{{id}}?category={{../viewingCategory}}" class="list-group-item">{{title}}</a>
             {{/each}}
         </ul>
@@ -41,9 +33,6 @@
 
         <ul class="list-group">
             {{#each data.categories}}
-           {{!-- <a href="#" class="list-group-item">Category 1</a>
-            <a href="#" class="list-group-item">Category 2</a>
-            <a href="#" class="list-group-item">etc...</a> --}}
             <a href="/blog?category={{id}}" class="list-group-item">{{category}}</a>
             {{/each}}
         </ul>
