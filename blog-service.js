@@ -107,7 +107,11 @@ module.exports.getPostsByCategory=function(category){
         Post.findAll({
             where:{category:category}
         })
-        .then(()=>resolve(Post.findAll({where:{category:category}})))
+        .then(()=>resolve(Post.findAll({
+            where:{
+                category:category
+            }
+        })))
         .catch(()=>reject("no results returned"));
     })
 }
@@ -157,6 +161,18 @@ module.exports.getPostById=function(id){
 // get category by filtering posts
 module.exports.getPublishedPostsByCategory = function(category){
     return new Promise (function(resolve,reject){
-        reject();
+        Post.findAll({
+            where:{
+                published:true,
+                categoryID:category
+            }
+        })
+        .then(()=>resolve(Post.findAll({
+            where:{
+                published:true,
+                categoryID:category
+            }
+        })))
+        .catch(()=>reject("no results returned"));
     })
 };
