@@ -88,11 +88,12 @@ module.exports.getCategories = function(){
 // add post
 module.exports.addPost=function(postData){
     postData.published = (postData.published) ? true : false;
-    for(x in postData){
-        if(x==""){
-            x=null
+    for(prop in postData){
+        if(prop==""){
+            prop=null
         }
     }
+    postData.postDate = new Date()
     return new Promise (function(resolve,reject){
         Post.create(postData)
         .then(()=>resolve())
