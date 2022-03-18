@@ -1,7 +1,16 @@
-// const fs = require("fs");
+const env = require("dotenv")
+env.config()
 
-// var posts = [];
-// var categories = [];
+const Sequelize = require('sequelize');
+var sequelize = new Sequelize('d5sokonv8preti', 'titcjemnfqgzzr', '2a74e430794952a116a7e378f403b5e025774e04aad627220bf8da7ae4f1a65c', {
+    host: 'ec2-44-194-167-63.compute-1.amazonaws.com',
+    dialect: 'postgres',
+    port: 5432,
+    dialectOptions: {
+        ssl: { rejectUnauthorized: false }
+    },
+    query: { raw: true }
+});
 
 
 //initialize blog by reading/loading files
