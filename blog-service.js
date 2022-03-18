@@ -74,7 +74,11 @@ module.exports.addPost=function(postData){
 // get posts based on category num
 module.exports.getPostsByCategory=function(category){
     return new Promise (function(resolve,reject) {
-        reject();
+        Post.findAll({
+            where:{category:category}
+        })
+        .then(()=>resolve(Post.findAll({where:{category:category}})))
+        .catch(()=>reject("no results returned"));
     })
 }
 
