@@ -40,8 +40,9 @@ module.exports.initialize = function(){
 // get all posts
 module.exports.getAllPosts = function(){
     return new Promise (function(resolve,reject){
-        
-        reject();
+        Post.findAll()
+        .then(()=>resolve())
+        .catch(()=>reject("no results returned"));
     })
 };
 
