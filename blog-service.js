@@ -60,7 +60,17 @@ module.exports.getAllPosts = function(){
 // get 'published = yes' posts only
 module.exports.getPublishedPosts=function(){
     return new Promise (function(resolve,reject){
-        reject();
+        Post.findAll({
+            where:{
+                published:true
+            }
+        })
+        .then(()=>resolve(Post.findAll({
+            where:{
+                published:true
+            }
+        })))
+        .catch(()=>reject("no results returned"));
     })
 };
 
