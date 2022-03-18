@@ -13,10 +13,26 @@ var sequelize = new Sequelize('d5sokonv8preti', 'titcjemnfqgzzr', '2a74e43079495
 });
 
 
+const Post = sequelize.define('post',{
+    body:Sequelize.TEXT,
+    title:Sequelize.STRING,
+    postDate:Sequelize.DATE,
+    featureImage:Sequelize.STRING,
+    published:Sequelize.BOOLEAN
+})
+
+const Category = sequelize.define('category',{
+    category:Sequelize.STRING
+})
+
+Post.belongsTo(Category, {foreignKey: 'category'});
+
 //initialize blog by reading/loading files
 module.exports.initialize = function(){
     return new Promise (function(resolve,reject){
-        reject();
+        sequelize.sync()
+        .then(()=>resolve())
+        .catch(()=>reject("unable to sync the database"));
     })
 };
 
@@ -24,6 +40,7 @@ module.exports.initialize = function(){
 // get all posts
 module.exports.getAllPosts = function(){
     return new Promise (function(resolve,reject){
+        
         reject();
     })
 };
