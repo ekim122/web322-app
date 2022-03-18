@@ -78,7 +78,9 @@ module.exports.getPublishedPosts=function(){
 // get all categories
 module.exports.getCategories = function(){
     return new Promise (function(resolve,reject){
-        reject();
+        Category.findAll()
+        .then(()=>resolve())
+        .catch(()=>reject("no results returned"));
     })
 };
 
