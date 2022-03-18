@@ -44,9 +44,13 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                                     return options.fn(this);}},
 
                                              safeHTML: function(context){
-                                                 return stripJs(context);
-                                             }   
-                                             }
+                                                 return stripJs(context);}},
+
+                                            formatDate: function(dateObj){
+                                            let year = dateObj.getFullYear();
+                                            let month = (dateObj.getMonth() + 1).toString();
+                                            let day = dateObj.getDate().toString();
+                                            return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;}                
                                 }));
 app.set('view engine', '.hbs');
 // ====================================================================
