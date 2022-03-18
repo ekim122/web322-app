@@ -75,8 +75,16 @@ module.exports.getCategories = function(){
 
 // add post
 module.exports.addPost=function(postData){
+    postData.published = (postData.published) ? true : false;
+    for(x in postData){
+        if(x==""){
+            x=null
+        }
+    }
     return new Promise (function(resolve,reject){
-        reject();
+        Post.create(postData)
+        .then(()=>resolve())
+        .catch(()=>reject("unable to create post"));
     })
 };
 
@@ -129,7 +137,7 @@ module.exports.getPostById=function(id){
                 postID: id
             }
         })))
-        .catch(()=>reject());
+        .catch(()=>reject("no results returned"));
     })
 }
 
