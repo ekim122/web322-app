@@ -268,8 +268,11 @@ app.get('/blog/:id', async (req, res) => {
 app.get("/posts", function(req,res){
     if (req.query.category){
         blogService.getPostsByCategory(req.query.category).then((data)=>{
-            //res.json(data)
-            res.render("posts", {posts: data})
+            if (data.length > 0){
+                res.render("posts", {posts: data})
+            }else{
+                res.render("posts",{ message: "no results" });
+            }
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
             console.log(err)
@@ -278,8 +281,11 @@ app.get("/posts", function(req,res){
     }
     else if(req.query.minDate){
         blogService.getPostsByMinDate(req.query.minDate).then((data)=>{
-            //res.json(data)
-            res.render("posts", {posts: data})
+            if (data.length > 0){
+                res.render("posts", {posts: data})
+            }else{
+                res.render("posts",{ message: "no results" });
+            }
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
             console.log(err)
@@ -287,10 +293,13 @@ app.get("/posts", function(req,res){
         })
     }
     else{
-        //TODO: get all posts within the posts.json file
+        
         blogService.getAllPosts().then((data)=>{
-            //res.json(data)
-            res.render("posts", {posts: data})
+            if (data.length > 0){
+                res.render("posts", {posts: data})
+            }else{
+                res.render("posts",{ message: "no results" });
+            }
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
             console.log(err)
