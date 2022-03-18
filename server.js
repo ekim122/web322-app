@@ -293,7 +293,7 @@ app.get("/posts", function(req,res){
         })
     }
     else{
-        
+
         blogService.getAllPosts().then((data)=>{
             if (data.length > 0){
                 res.render("posts", {posts: data})
@@ -315,8 +315,11 @@ app.get("/posts", function(req,res){
 app.get("/categories", function(req,res){
     //TODO: get all posts within the categories.json file
     blogService.getCategories().then((data)=>{
-        //res.json(data)
-        res.render("categories", {categories: data});
+        if (data.length > 0){
+            res.render("categories", {categories: data});
+        }else{
+            res.render("categories", {message: "no results"});
+        }
     }).catch((err)=>{
         res.render("categories", {message: "no results"});
         console.log(err)
