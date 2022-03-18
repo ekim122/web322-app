@@ -86,7 +86,22 @@ module.exports.getPostsByCategory=function(category){
 // get posts based on min date
 module.exports.getPostsByMinDate=function(minDate){
     return new Promise (function(resolve,reject) {
-        reject();
+        const { gte } = Sequelize.Op;
+        Post.findAll({
+            where: {
+                postDate: {
+                    [gte]: new Date(minDateStr)
+                }
+            }
+        })
+        .then(()=>resolve(Post.findAll({
+            where: {
+                postDate: {
+                    [gte]: new Date(minDateStr)
+                }
+            }
+        })))
+        .catch(()=>reject("no results returned"));
     })
 }
 
