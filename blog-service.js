@@ -14,6 +14,11 @@ var sequelize = new Sequelize('d5sokonv8preti', 'titcjemnfqgzzr', '2a74e43079495
 
 
 const Post = sequelize.define('post',{
+    postID:{
+        type:Sequelize.INTEGER,
+        primaryKey:true,
+        autoIncrement:true
+    },
     body:Sequelize.TEXT,
     title:Sequelize.STRING,
     postDate:Sequelize.DATE,
@@ -22,6 +27,11 @@ const Post = sequelize.define('post',{
 })
 
 const Category = sequelize.define('category',{
+    categoryID:{
+        type:Sequelize.INTEGER,
+        primaryKey:true,
+        autoIncrement:true
+    },
     category:Sequelize.STRING
 })
 
@@ -109,7 +119,17 @@ module.exports.getPostsByMinDate=function(minDate){
 // get specific post id
 module.exports.getPostById=function(id){
     return new Promise (function(resolve,reject) {
-        reject();
+        Post.findAll({
+            where:{
+                postID: id
+            }
+        }) 
+        .then(()=>resolve(Post.findAll({
+            where:{
+                postID: id
+            }
+        })))
+        .catch(()=>reject());
     })
 }
 
