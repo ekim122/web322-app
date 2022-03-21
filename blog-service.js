@@ -192,3 +192,13 @@ module.exports.addCategory = function(categoryData){
         .catch(()=>reject("unable to create category"));
     })
 };
+
+
+// allow user to delete category
+module.exports.deleteCategoryById = function(id){
+    return new Promise (function(resolve,reject){
+        Category.destroy({where:{categoryID:id}})
+        .then(()=>resolve( Category.destroy({where:{categoryID:id}})))
+        .catch(()=>reject("unable to delete category"))
+    })
+};
