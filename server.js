@@ -340,13 +340,23 @@ app.get("/posts/add", function(req,res){
 
 
 
-// setup /categories/add
+// setup get route for /categories/add
 app.get("/categories/add", function(req,res){
     //res.sendFile(path.join(__dirname, "/views/addPost.html"));
     res.render("addCategory")
 });
 // ====================================================================
 
+
+
+// setup post route for /categories/add
+app.post("/categories/add", function(req,res){
+    //res.sendFile(path.join(__dirname, "/views/addPost.html"));
+    blogService.addCategory(req.body).then(()=>{
+        res.redirect("/categories")
+    })
+});
+// ====================================================================
 
 
 // setup another route to display 404
