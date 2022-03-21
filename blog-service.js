@@ -202,3 +202,13 @@ module.exports.deleteCategoryById = function(id){
         .catch(()=>reject("unable to delete category"))
     })
 };
+
+
+// allow user to delete post
+module.exports.deletePostById = function(id){
+    return new Promise (function(resolve,reject){
+        Post.destroy({where:{postID:id}})
+        .then(()=>resolve( Post.destroy({where:{postID:id}})))
+        .catch(()=>reject("unable to delete post"))
+    })
+};
