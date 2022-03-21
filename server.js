@@ -25,6 +25,7 @@ const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
 app.use(express.static('public'));
 const stripJs = require('strip-js');
+app.use(express.urlencoded({extended: true}));
 
 const exphbs = require("express-handlebars");
 app.engine('.hbs', exphbs.engine({ extname: '.hbs',
@@ -334,6 +335,15 @@ app.get("/categories", function(req,res){
 app.get("/posts/add", function(req,res){
     //res.sendFile(path.join(__dirname, "/views/addPost.html"));
     res.render("addPost")
+});
+// ====================================================================
+
+
+
+// setup /categories/add
+app.get("/categories/add", function(req,res){
+    //res.sendFile(path.join(__dirname, "/views/addPost.html"));
+    res.render("addCategory")
 });
 // ====================================================================
 
