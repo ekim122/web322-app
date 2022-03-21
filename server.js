@@ -333,8 +333,13 @@ app.get("/categories", function(req,res){
 
 // setup another route to display addPost
 app.get("/posts/add", function(req,res){
+    blogService.getCategories(req, body).then((data)=>{
+        res.render("addPost", {categories: data});
+    }).catch(()=>{
+        res.render("addPost", {categories: []});
+    })
     //res.sendFile(path.join(__dirname, "/views/addPost.html"));
-    res.render("addPost")
+    //res.render("addPost")
 });
 // ====================================================================
 
