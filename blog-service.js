@@ -13,7 +13,7 @@ var sequelize = new Sequelize('d5sokonv8preti', 'titcjemnfqgzzr', '2a74e43079495
 });
 
 
-const Post = sequelize.define('post',{
+const Post = sequelize.define('Post',{
     postID:{
         type:Sequelize.INTEGER,
         primaryKey:true,
@@ -26,7 +26,7 @@ const Post = sequelize.define('post',{
     published:Sequelize.BOOLEAN
 })
 
-const Category = sequelize.define('category',{
+const Category = sequelize.define('Category',{
     categoryID:{
         type:Sequelize.INTEGER,
         primaryKey:true,
