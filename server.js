@@ -359,6 +359,22 @@ app.post("/categories/add", function(req,res){
 // ====================================================================
 
 
+
+// setup get route for /categories/delete/:id
+app.get("/categories/delete/:id", function(req,res){
+    blogService.deleteCategoryById(req.params.id).then((data)=>{
+        res.redirect("/categories")
+    }).catch(()=>{
+        res.status(500).send("Unable to Remove Category / Category not found")
+        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+    })
+});
+// ====================================================================
+
+
+
+
+
 // setup another route to display 404
 app.use(function(req,res){
     //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
