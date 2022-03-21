@@ -24,6 +24,7 @@
                         <td>{{#formatDate postDate}}{{/formatDate}}</td>
                         <td><a href="/posts?category={{category}}">{{category}}</a></td>
                         <td>{{published}}</td>
+                        <td><a class="btn btn-danger" href="post/delete/{{id}}">remove</a></td>
                     </tr>
                 {{else}}
                 {{/each}}
