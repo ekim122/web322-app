@@ -177,3 +177,18 @@ module.exports.getPublishedPostsByCategory = function(category){
         .catch(()=>reject("no results returned"));
     })
 };
+
+
+// allow user to add category
+module.exports.addCategory = function(categoryData){
+    for(prop in categoryData){
+        if(prop==""){
+            prop=null
+        }
+    }
+    return new Promise (function(resolve,reject){
+        Category.create(categoryData)
+        .then(()=>resolve())
+        .catch(()=>reject("unable to create category"));
+    })
+};
