@@ -373,6 +373,17 @@ app.get("/categories/delete/:id", function(req,res){
 
 
 
+// setup get route for /posts/delete/:id
+app.get("/posts/delete/:id", function(req,res){
+    blogService.deletePostById(req.params.id).then((data)=>{
+        res.redirect("/posts")
+    }).catch(()=>{
+        res.status(500).send("Unable to Remove Post / Post not found")
+        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+    })
+});
+// ====================================================================
+
 
 
 // setup another route to display 404
