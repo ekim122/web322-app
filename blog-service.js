@@ -166,13 +166,13 @@ module.exports.getPublishedPostsByCategory = function(category){
         Post.findAll({
             where:{
                 published:true,
-                categoryID:category
+                category:category
             }
         })
         .then(()=>resolve(Post.findAll({
             where:{
                 published:true,
-                categoryID:category
+                category:category
             }
         })))
         .catch(()=>reject("no results returned"));
