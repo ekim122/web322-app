@@ -150,11 +150,14 @@ module.exports.getPostById=function(id){
                 postID: id
             }
         }) 
-        .then(()=>resolve(Post.findAll({
-            where:{
-                postID: id
-            }
-        })))
+        // .then(()=>resolve(Post.findOne({
+        //     where:{
+        //         postID: id
+        //     }
+        // })))
+        .then(function(data){
+            resolve(data[0])
+        })
         .catch(()=>reject("no results returned"));
     })
 }
