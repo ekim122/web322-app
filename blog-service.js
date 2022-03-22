@@ -67,11 +67,7 @@ module.exports.getPublishedPosts=function(){
                 published:true
             }
         })
-        .then(()=>resolve(Post.findAll({
-            where:{
-                published:true
-            }
-        })))
+        .then(function(data){resolve(data)})
         .catch(()=>reject("no results returned"));
     })
 };
@@ -87,7 +83,6 @@ module.exports.getCategories = function(){
 };
 
 
-// START FROM HERE WHEN CHECKING
 // add post
 module.exports.addPost=function(postData){
     postData.published = (postData.published) ? true : false;
@@ -111,11 +106,7 @@ module.exports.getPostsByCategory=function(category){
         Post.findAll({
             where:{category:category}
         })
-        .then(()=>resolve(Post.findAll({
-            where:{
-                category:category
-            }
-        })))
+        .then(function(data){resolve(data)})
         .catch(()=>reject("no results returned"));
     })
 }
@@ -132,13 +123,7 @@ module.exports.getPostsByMinDate=function(minDate){
                 }
             }
         })
-        .then(()=>resolve(Post.findAll({
-            where: {
-                postDate: {
-                    [gte]: new Date(minDate)
-                }
-            }
-        })))
+        .then(function(data){resolve(data)})
         .catch(()=>reject("no results returned"));
     })
 }
@@ -152,9 +137,7 @@ module.exports.getPostById=function(id){
                 postID: id
             }
         })
-        .then(function(data){
-            resolve(data[0])
-        })
+        .then(function(data){resolve(data[0])})
         .catch(()=>reject("no results returned"));
     })
 }
@@ -169,12 +152,7 @@ module.exports.getPublishedPostsByCategory = function(category){
                 category:category
             }
         })
-        .then(()=>resolve(Post.findAll({
-            where:{
-                published:true,
-                category:category
-            }
-        })))
+        .then(function(data){resolve(data)})
         .catch(()=>reject("no results returned"));
     })
 };
@@ -199,7 +177,7 @@ module.exports.addCategory = function(categoryData){
 module.exports.deleteCategoryById = function(id){
     return new Promise (function(resolve,reject){
         Category.destroy({where:{categoryID:id}})
-        .then(()=>resolve( Category.destroy({where:{categoryID:id}}) ))
+        .then(function(data){resolve(data)})
         .catch(()=>reject("unable to delete category"))
     })
 };
@@ -209,7 +187,7 @@ module.exports.deleteCategoryById = function(id){
 module.exports.deletePostById = function(id){
     return new Promise (function(resolve,reject){
         Post.destroy({where:{postID:id}})
-        .then(()=>resolve( Post.destroy({where:{postID:id}}) ))
+        .then(function(data){resolve(data)})
         .catch(()=>reject("unable to delete post"))
     })
 };
