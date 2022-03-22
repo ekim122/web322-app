@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
           {{!-- <h2>Posts</h2> --}}
-          <h2><a href="/posts/add" class="btn btn-success pull-right">Add Post</a></h2>
+          <h2>Posts <a href="/posts/add" class="btn btn-success pull-right">Add Post</a></h2>
           <hr />
 
           {{!-- <p>TODO: render a list of all post title values here</p> --}}
@@ -19,12 +19,12 @@
                 <tbody>
                 {{#each posts}}
                     <tr>
-                        <td>{{id}}</td>
+                        <td>{{postID}}</td>
                         <td>{{title}}</td>
                         <td>{{#formatDate postDate}}{{/formatDate}}</td>
                         <td><a href="/posts?category={{category}}">{{category}}</a></td>
                         <td>{{published}}</td>
-                        <td><a class="btn btn-danger" href="post/delete/{{id}}">remove</a></td>
+                        <td><a class="btn btn-danger" href="posts/delete/{{postID}}">remove</a></td>
                     </tr>
                 {{else}}
                 {{/each}}
