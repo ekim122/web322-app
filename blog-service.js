@@ -51,7 +51,7 @@ module.exports.initialize = function(){
 module.exports.getAllPosts = function(){
     return new Promise (function(resolve,reject){
         Post.findAll()
-        .then(()=>resolve())
+        .then(()=>resolve(Post.findAll()))
         .catch(()=>reject("no results returned"));
     })
 };
@@ -79,12 +79,13 @@ module.exports.getPublishedPosts=function(){
 module.exports.getCategories = function(){
     return new Promise (function(resolve,reject){
         Category.findAll()
-        .then(()=>resolve())
+        .then(()=>resolve(Category.findAll()))
         .catch(()=>reject("no results returned"));
     })
 };
 
 
+// START FROM HERE WHEN CHECKING
 // add post
 module.exports.addPost=function(postData){
     postData.published = (postData.published) ? true : false;
@@ -125,14 +126,14 @@ module.exports.getPostsByMinDate=function(minDate){
         Post.findAll({
             where: {
                 postDate: {
-                    [gte]: new Date(minDateStr)
+                    [gte]: new Date(minDate)
                 }
             }
         })
         .then(()=>resolve(Post.findAll({
             where: {
                 postDate: {
-                    [gte]: new Date(minDateStr)
+                    [gte]: new Date(minDate)
                 }
             }
         })))
@@ -198,7 +199,7 @@ module.exports.addCategory = function(categoryData){
 module.exports.deleteCategoryById = function(id){
     return new Promise (function(resolve,reject){
         Category.destroy({where:{categoryID:id}})
-        .then(()=>resolve( Category.destroy({where:{categoryID:id}})))
+        .then(()=>resolve( Category.destroy({where:{categoryID:id}}) ))
         .catch(()=>reject("unable to delete category"))
     })
 };
@@ -208,7 +209,7 @@ module.exports.deleteCategoryById = function(id){
 module.exports.deletePostById = function(id){
     return new Promise (function(resolve,reject){
         Post.destroy({where:{postID:id}})
-        .then(()=>resolve( Post.destroy({where:{postID:id}})))
+        .then(()=>resolve( Post.destroy({where:{postID:id}}) ))
         .catch(()=>reject("unable to delete post"))
     })
 };
