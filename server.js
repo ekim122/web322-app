@@ -45,13 +45,13 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                                     return options.fn(this);}},
 
                                              safeHTML: function(context){
-                                                 return stripJs(context);}},
+                                                 return stripJs(context);},
 
                                             formatDate: function(dateObj){
                                             let year = dateObj.getFullYear();
                                             let month = (dateObj.getMonth() + 1).toString();
                                             let day = dateObj.getDate().toString();
-                                            return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;}                
+                                            return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;}}                
                                 }));
 app.set('view engine', '.hbs');
 // ====================================================================
@@ -86,6 +86,7 @@ app.post("/posts/add", upload.single("featureImage"), function (req, res) {
     let streamUpload = (req) => {
         return new Promise((resolve, reject) => {
             let stream = cloudinary.uploader.upload_stream(
+                {resource_type: 'raw'},
                 (error, result) => {
                 if (result) {
                     resolve(result);
@@ -321,9 +322,9 @@ app.get("/categories", function(req,res){
         }else{
             res.render("categories", {message: "no results"});
         }
-    }).catch((err)=>{
+    }).catch(()=>{
         res.render("categories", {message: "no results"});
-        console.log(err)
+        //console.log(err)
         //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
@@ -333,7 +334,7 @@ app.get("/categories", function(req,res){
 
 // setup another route to display addPost
 app.get("/posts/add", function(req,res){
-    blogService.getCategories(req, body).then((data)=>{
+    blogService.getCategories().then((data)=>{
         res.render("addPost", {categories: data});
     }).catch(()=>{
         res.render("addPost", {categories: []});
