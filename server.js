@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB322 – Assignment 04
+*  WEB322 – Assignment 05
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Eun Dong Kim    Student ID: 144692209   Date: Mar 03, 2022
+*  Name: Eun Dong Kim    Student ID: 144692209   Date: Mar 22, 2022
 *
 *  Online (Heroku) URL: https://vast-shelf-74905.herokuapp.com/
 *
@@ -30,7 +30,6 @@ app.use(express.urlencoded({extended: true}));
 const exphbs = require("express-handlebars");
 app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                      helpers:{
-
                                             navLink: function(url, options){
                                             return '<li' + 
                                                 ((url == app.locals.activeRoute) ? ' class="active" ' : '') + 
@@ -51,8 +50,8 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                             let year = dateObj.getFullYear();
                                             let month = (dateObj.getMonth() + 1).toString();
                                             let day = dateObj.getDate().toString();
-                                            return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;}}                
-                                }));
+                                            return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;}                
+                                }}));
 app.set('view engine', '.hbs');
 // ====================================================================
 
@@ -79,14 +78,13 @@ app.use(function(req,res,next){
 
 
 
-//Image Upload
-const upload = multer(); // no { storage: storage } since we are not using disk storage
+// Cloudinary image Upload function with /posts/add route
+const upload = multer();
 app.post("/posts/add", upload.single("featureImage"), function (req, res) {
 
     let streamUpload = (req) => {
         return new Promise((resolve, reject) => {
             let stream = cloudinary.uploader.upload_stream(
-                {resource_type: 'raw'},
                 (error, result) => {
                 if (result) {
                     resolve(result);
@@ -109,10 +107,9 @@ app.post("/posts/add", upload.single("featureImage"), function (req, res) {
     upload(req).then((uploaded)=>{
         req.body.featureImage = uploaded.url;
     
-        // TODO: Process the req.body and add it as a new Blog Post before redirecting to /posts
         blogService.addPost(req.body).then(()=>{
             res.redirect("/posts")
-        })
+        }).catch((err)=>res.json({"message":err}))
     });
     
 })
@@ -130,7 +127,6 @@ app.get("/", function(req,res){
 
 // setup another route to listen on /about
 app.get("/about", function(req,res){
-    //res.sendFile(path.join(__dirname,"/views/about.html"));
     res.render("about")
 });
 // ====================================================================
@@ -138,41 +134,23 @@ app.get("/about", function(req,res){
 
 
 // setup another route to listen on /blog
-// app.get("/blog", function(req,res){
-//     //TODO: get all posts who have published==true
-//     blogService.getPublishedPosts().then((data)=>{
-//         res.json(data)
-//     }).catch((err)=>{
-//         console.log(err)
-//         res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
-//     })
-// });
 app.get('/blog', async (req, res) => {
 
-    // Declare an object to store properties for the view
     let viewData = {};
 
     try{
-
-        // declare empty array to hold "post" objects
         let posts = [];
 
-        // if there's a "category" query, filter the returned posts by category
         if(req.query.category){
-            // Obtain the published "posts" by category
             posts = await blogService.getPublishedPostsByCategory(req.query.category);
         }else{
-            // Obtain the published "posts"
             posts = await blogService.getPublishedPosts();
         }
 
-        // sort the published posts by postDate
         posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
 
-        // get the latest post from the front of the list (element 0)
         let post = posts[0]; 
 
-        // store the "posts" and "post" data in the viewData object (to be passed to the view)
         viewData.posts = posts;
         viewData.post = post;
 
@@ -181,19 +159,13 @@ app.get('/blog', async (req, res) => {
     }
 
     try{
-        // Obtain the full list of "categories"
         let categories = await blogService.getCategories();
-
-        // store the "categories" data in the viewData object (to be passed to the view)
         viewData.categories = categories;
-
     }catch(err){
         viewData.categoriesMessage = "no results"
     }
 
-    // render the "blog" view with all of the data (viewData)
     res.render("blog", {data: viewData})
-
 });
 // ====================================================================
 
@@ -205,7 +177,6 @@ app.get("/post/:id", function (req, res){
         res.json(data)
     }).catch((err)=>{
         console.log(err)
-        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 })
 // ====================================================================
@@ -215,27 +186,19 @@ app.get("/post/:id", function (req, res){
 // setup "/blog/value" route
 app.get('/blog/:id', async (req, res) => {
 
-    // Declare an object to store properties for the view
     let viewData = {};
 
     try{
-
-        // declare empty array to hold "post" objects
         let posts = [];
 
-        // if there's a "category" query, filter the returned posts by category
         if(req.query.category){
-            // Obtain the published "posts" by category
             posts = await blogService.getPublishedPostsByCategory(req.query.category);
         }else{
-            // Obtain the published "posts"
             posts = await blogService.getPublishedPosts();
         }
 
-        // sort the published posts by postDate
         posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
 
-        // store the "posts" and "post" data in the viewData object (to be passed to the view)
         viewData.posts = posts;
 
     }catch(err){
@@ -243,23 +206,18 @@ app.get('/blog/:id', async (req, res) => {
     }
 
     try{
-        // Obtain the post by "id"
         viewData.post = await blogService.getPostById(req.params.id);
     }catch(err){
         viewData.message = "no results"; 
     }
 
     try{
-        // Obtain the full list of "categories"
         let categories = await blogService.getCategories();
-
-        // store the "categories" data in the viewData object (to be passed to the view)
         viewData.categories = categories;
     }catch(err){
         viewData.categoriesMessage = "no results"
     }
 
-    // render the "blog" view with all of the data (viewData)
     res.render("blog", {data: viewData})
 });
 // ====================================================================
@@ -278,7 +236,6 @@ app.get("/posts", function(req,res){
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
             console.log(err)
-            //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
     else if(req.query.minDate){
@@ -291,7 +248,6 @@ app.get("/posts", function(req,res){
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
             console.log(err)
-            //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
     else{
@@ -305,7 +261,6 @@ app.get("/posts", function(req,res){
         }).catch((err)=>{
             res.render("posts", {message: "no results"});
             console.log(err)
-            //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
         })
     }
 });
@@ -315,7 +270,6 @@ app.get("/posts", function(req,res){
 
 // setup another route to listen on /categories
 app.get("/categories", function(req,res){
-    //TODO: get all posts within the categories.json file
     blogService.getCategories().then((data)=>{
         if (data.length > 0){
             res.render("categories", {categories: data});
@@ -324,8 +278,6 @@ app.get("/categories", function(req,res){
         }
     }).catch(()=>{
         res.render("categories", {message: "no results"});
-        //console.log(err)
-        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
 // ====================================================================
@@ -339,8 +291,6 @@ app.get("/posts/add", function(req,res){
     }).catch(()=>{
         res.render("addPost", {categories: []});
     })
-    //res.sendFile(path.join(__dirname, "/views/addPost.html"));
-    //res.render("addPost")
 });
 // ====================================================================
 
@@ -348,7 +298,6 @@ app.get("/posts/add", function(req,res){
 
 // setup get route for /categories/add
 app.get("/categories/add", function(req,res){
-    //res.sendFile(path.join(__dirname, "/views/addPost.html"));
     res.render("addCategory")
 });
 // ====================================================================
@@ -357,7 +306,6 @@ app.get("/categories/add", function(req,res){
 
 // setup post route for /categories/add
 app.post("/categories/add", function(req,res){
-    //res.sendFile(path.join(__dirname, "/views/addPost.html"));
     blogService.addCategory(req.body).then(()=>{
         res.redirect("/categories")
     })
@@ -372,7 +320,6 @@ app.get("/categories/delete/:id", function(req,res){
         res.redirect("/categories")
     }).catch(()=>{
         res.status(500).send("Unable to Remove Category / Category not found")
-        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
 // ====================================================================
@@ -385,7 +332,6 @@ app.get("/posts/delete/:id", function(req,res){
         res.redirect("/posts")
     }).catch(()=>{
         res.status(500).send("Unable to Remove Post / Post not found")
-        //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     })
 });
 // ====================================================================
@@ -394,7 +340,6 @@ app.get("/posts/delete/:id", function(req,res){
 
 // setup another route to display 404
 app.use(function(req,res){
-    //res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
     res.render("404")
 });
 // ====================================================================
@@ -406,7 +351,6 @@ blogService.initialize().then(()=>{
     app.listen(HTTP_PORT, onHttpStart);
 }).catch((err)=>{
     console.log(err);
-    //res.status(500).sendFile(path.join(__dirname, "/views/404.html"));
     res.status(500).send('Internal Server Error')
 })
 // ====================================================================
