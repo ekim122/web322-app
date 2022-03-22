@@ -2,10 +2,11 @@ const env = require("dotenv")
 env.config()
 
 const Sequelize = require('sequelize');
-var sequelize = new Sequelize('d5sokonv8preti', 'titcjemnfqgzzr', '2a74e430794952a116a7e378f403b5e025774e04aad627220bf8da7ae4f1a65c', {
-    host: 'ec2-44-194-167-63.compute-1.amazonaws.com',
+
+var sequelize = new Sequelize(process.env.HEROKU_DATABASE, process.env.HEROKU_USER, process.env.HEROKU_PASS, {
+    host: process.env.HEROKU_HOST,
     dialect: 'postgres',
-    port: 5432,
+    port: process.env.HEROKU_PORT,
     dialectOptions: {
         ssl: { rejectUnauthorized: false }
     },
@@ -36,6 +37,7 @@ const Category = sequelize.define('Category',{
 })
 
 Post.belongsTo(Category, {foreignKey: 'category'});
+
 
 //initialize blog by reading/loading files
 module.exports.initialize = function(){
@@ -149,12 +151,7 @@ module.exports.getPostById=function(id){
             where:{
                 postID: id
             }
-        }) 
-        // .then(()=>resolve(Post.findOne({
-        //     where:{
-        //         postID: id
-        //     }
-        // })))
+        })
         .then(function(data){
             resolve(data[0])
         })
