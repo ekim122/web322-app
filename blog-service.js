@@ -87,8 +87,8 @@ module.exports.getCategories = function(){
 module.exports.addPost=function(postData){
     postData.published = (postData.published) ? true : false;
     for(prop in postData){
-        if(prop==""){
-            prop=null
+        if (postData[prop] == ""){
+            postData[prop] = null
         }
     }
     postData.postDate = new Date()
