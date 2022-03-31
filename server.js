@@ -100,7 +100,7 @@ app.use(function(req,res,next){
 
 // Cloudinary image Upload function with /posts/add route
 const upload = multer();
-app.post("/posts/add", upload.single("featureImage"), function (req, res) {
+app.post("/posts/add", ensureLogin, upload.single("featureImage"), function (req, res) {
 
     let streamUpload = (req) => {
         return new Promise((resolve, reject) => {
@@ -192,7 +192,7 @@ app.get('/blog', async (req, res) => {
 
 
 // setup "/post/value" route
-app.get("/post/:id", function (req, res){
+app.get("/post/:id", ensureLogin, function (req, res){
     blogService.getPostById(req.params.id).then((data)=>{
         res.json(data)
     }).catch((err)=>{
@@ -245,7 +245,7 @@ app.get('/blog/:id', async (req, res) => {
 
 
 // setup another route to listen on /posts
-app.get("/posts", function(req,res){
+app.get("/posts", ensureLogin, function(req,res){
     if (req.query.category){
         blogService.getPostsByCategory(req.query.category).then((data)=>{
             if (data.length > 0){
@@ -289,7 +289,7 @@ app.get("/posts", function(req,res){
 
 
 // setup another route to listen on /categories
-app.get("/categories", function(req,res){
+app.get("/categories", ensureLogin, function(req,res){
     blogService.getCategories().then((data)=>{
         if (data.length > 0){
             res.render("categories", {categories: data});
@@ -305,7 +305,7 @@ app.get("/categories", function(req,res){
 
 
 // setup another route to display addPost
-app.get("/posts/add", function(req,res){
+app.get("/posts/add", ensureLogin, function(req,res){
     blogService.getCategories().then((data)=>{
         res.render("addPost", {categories: data});
     }).catch(()=>{
@@ -317,7 +317,7 @@ app.get("/posts/add", function(req,res){
 
 
 // setup get route for /categories/add
-app.get("/categories/add", function(req,res){
+app.get("/categories/add", ensureLogin, function(req,res){
     res.render("addCategory")
 });
 // ====================================================================
@@ -325,7 +325,7 @@ app.get("/categories/add", function(req,res){
 
 
 // setup post route for /categories/add
-app.post("/categories/add", function(req,res){
+app.post("/categories/add", ensureLogin, function(req,res){
     blogService.addCategory(req.body).then(()=>{
         res.redirect("/categories")
     })
@@ -335,7 +335,7 @@ app.post("/categories/add", function(req,res){
 
 
 // setup get route for /categories/delete/:id
-app.get("/categories/delete/:id", function(req,res){
+app.get("/categories/delete/:id", ensureLogin, function(req,res){
     blogService.deleteCategoryById(req.params.id).then((data)=>{
         res.redirect("/categories")
     }).catch(()=>{
@@ -347,7 +347,7 @@ app.get("/categories/delete/:id", function(req,res){
 
 
 // setup get route for /posts/delete/:id
-app.get("/posts/delete/:id", function(req,res){
+app.get("/posts/delete/:id", ensureLogin, function(req,res){
     blogService.deletePostById(req.params.id).then((data)=>{
         res.redirect("/posts")
     }).catch(()=>{
