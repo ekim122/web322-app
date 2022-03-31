@@ -145,6 +145,14 @@ app.get("/login", function(req,res){
 
 
 
+// setup get /register route
+app.get("/register", function(req,res){
+    res.render('register');
+});
+// ====================================================================
+
+
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
     res.redirect('/blog');
