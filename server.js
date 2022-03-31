@@ -167,6 +167,25 @@ app.post("/register", function(req,res){
 
 
 
+// setup post /login route
+app.post("/login", function(req,res){
+    req.body.userAgent = req.get('User-Agent');
+    authData.checkUser(req.body).then((user) => {
+        req.session.user = {
+            userName: user.userName,// authenticated user's userName
+            email: user.email,// authenticated user's email
+            loginHistory: user.loginHistory// authenticated user's loginHistory
+        }
+        res.redirect('/posts');
+    })
+    .catch((err)=>{
+        res.render('login', {errorMessage: err, userName: req.body.userName})
+    })  
+});
+// ====================================================================
+
+
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
     res.redirect('/blog');
