@@ -28,6 +28,12 @@ const streamifier = require('streamifier')
 app.use(express.static('public'));
 const stripJs = require('strip-js');
 app.use(express.urlencoded({extended: true}));
+app.use(clientSessions({
+    cookieName: "session",
+    secret: "web322-app_assign6",
+    duration: 2*60*1000,
+    activeDuration: 1000*60
+}))
 
 const exphbs = require("express-handlebars");
 app.engine('.hbs', exphbs.engine({ extname: '.hbs',
