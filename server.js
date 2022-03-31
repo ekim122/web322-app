@@ -17,6 +17,7 @@ var blogService = require("./blog-service.js");
 var app = express();
 var path = require("path");
 const env = require("dotenv")
+var authData = require("./auth-service.js");
 env.config()
 const HTTP_PORT = process.env.PORT
 const onHttpStart = () => console.log(`Express http server listening on: ${HTTP_PORT}`)
