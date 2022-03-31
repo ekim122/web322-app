@@ -137,6 +137,14 @@ app.post("/posts/add", ensureLogin, upload.single("featureImage"), function (req
 
 
 
+// setup get /login route
+app.get("/login", function(req,res){
+    res.render('login');
+});
+// ====================================================================
+
+
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
     res.redirect('/blog');
