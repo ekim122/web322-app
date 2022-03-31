@@ -186,6 +186,15 @@ app.post("/login", function(req,res){
 
 
 
+// setup get /logout route
+app.get("/logout", function(req,res){
+    req.session.reset()
+    res.redirect('/');
+});
+// ====================================================================
+
+
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
     res.redirect('/blog');
