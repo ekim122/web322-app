@@ -11,3 +11,5 @@ var userSchema = new Schema({
         "userAgent":String
     }]
 })
+
+let User; // to be defined on new connection (see initialize)
