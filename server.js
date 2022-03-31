@@ -195,6 +195,14 @@ app.get("/logout", function(req,res){
 
 
 
+// setup get /userHistory route
+app.get("/userHistory", function(req,res){
+    res.render('userHistory');
+});
+// ====================================================================
+
+
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
     res.redirect('/blog');
