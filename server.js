@@ -34,6 +34,18 @@ app.use(clientSessions({
     duration: 2*60*1000,
     activeDuration: 1000*60
 }))
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
+function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+        res.redirect("/login");
+    }
+    else{
+        next();
+    }
+}  
 
 const exphbs = require("express-handlebars");
 app.engine('.hbs', exphbs.engine({ extname: '.hbs',
