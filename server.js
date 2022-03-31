@@ -153,6 +153,20 @@ app.get("/register", function(req,res){
 
 
 
+// setup post /register route
+app.post("/register", function(req,res){
+    authData.registerUser(req.body)
+    .then((data)=>{
+        res.render('register', {successMessage: "User created"})
+    })
+    .catch((err)=>{
+        res.render('register', {errorMessage: err, userName: req.body.userName})
+    })
+});
+// ====================================================================
+
+
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
     res.redirect('/blog');
