@@ -442,10 +442,12 @@ app.use(function(req,res){
 blogService.initialize()
 .then(authData.initialize)
 .then(function(){
-    app.listen(HTTP_PORT, function(){
-        console.log("app listening on: " + HTTP_PORT)
-    });
+    // app.listen(HTTP_PORT, function(){
+    //     console.log("app listening on: " + HTTP_PORT)
+    // });
+    app.listen(HTTP_PORT, onHttpStart);
 }).catch(function(err){
     console.log("unable to start server: " + err);
+    res.status(500).send('Internal Server Error')
 });
 // ====================================================================
