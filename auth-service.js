@@ -40,18 +40,38 @@ module.exports.registerUser = function(userData){
             reject("Passwords do not match")
         }
         else{
-            let newUser = new User(userData)
-            newUser.save((err)=>{
-                if (err) {
-                    if (err.code == 11000){
-                        reject("User Name already taken")
+            bcrypt.hash(userData.password, 10)
+            .then((hash)=>{
+                userData.password = hash
+                let newUser = new User(userData)
+                newUser.save((err)=>{
+                    if (err) {
+                        if (err.code == 11000){
+                            reject("User Name already taken")
+                        }
+                        reject("There was an error creating the user: " + err)
                     }
-                    reject("There was an error creating the user: " + err)
-                }
-                else{
-                    resolve()
-                }
+                    else{
+                        resolve()
+                    }
+                })
             })
+            .catch((err)=>{
+                reject("There was an error encrypting the password")
+            })
+            // userData.password = hash
+            // let newUser = new User(userData)
+            // newUser.save((err)=>{
+            //     if (err) {
+            //         if (err.code == 11000){
+            //             reject("User Name already taken")
+            //         }
+            //         reject("There was an error creating the user: " + err)
+            //     }
+            //     else{
+            //         resolve()
+            //     }
+            // })
         }
     })
 }
@@ -66,7 +86,7 @@ module.exports.checkUser = function(userData){
                 reject("Unable to find user: " + userData.userName)
             }
             else{
-                compare(userData.password, users[0].password)
+                bcrypt.compare(userData.password, users[0].password)
                 .then((result)=>{
                     if (result === false){
                         reject("Incorrect Password for user: " + userData.userName)
