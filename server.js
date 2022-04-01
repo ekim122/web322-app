@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB322 – Assignment 05
+*  WEB322 – Assignment 06
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Eun Dong Kim    Student ID: 144692209   Date: Mar 22, 2022
+*  Name: Eun Dong Kim    Student ID: 144692209   Date: Mar 31, 2022
 *
 *  Online (Heroku) URL: https://aqueous-garden-50159.herokuapp.com/
 *
