@@ -6,7 +6,7 @@
 * 
 *  Name: Eun Dong Kim    Student ID: 144692209   Date: Apr 3, 2022
 *
-*  Online (Heroku) URL: https://aqueous-garden-50159.herokuapp.com/
+*  Online (Heroku) URL: https://radiant-ravine-13830.herokuapp.com/
 *
 *  GitHub Repository URL: https://github.com/ekim122/web322-app
 *
