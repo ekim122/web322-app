@@ -433,12 +433,6 @@ app.use(function(req,res){
 
 
 // setup http server to listen on HTTP_PORT
-// blogService.initialize().then(()=>{
-//     app.listen(HTTP_PORT, onHttpStart);
-// }).catch((err)=>{
-//     console.log(err);
-//     res.status(500).send('Internal Server Error')
-// })
 blogService.initialize()
 .then(authData.initialize)
 .then(function(){
