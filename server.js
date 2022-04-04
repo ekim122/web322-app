@@ -156,7 +156,7 @@ app.get("/register", function(req,res){
 // setup post /register route
 app.post("/register", function(req,res){
     authData.registerUser(req.body)
-    .then((data)=>{
+    .then(()=>{
         res.render('register', {successMessage: "User created"})
     })
     .catch((err)=>{

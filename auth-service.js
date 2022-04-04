@@ -58,7 +58,7 @@ module.exports.registerUser = function(userData){
                     }
                 })
             })
-            .catch((err)=>{
+            .catch(()=>{
                 reject("There was an error encrypting the password")
             })
         }
