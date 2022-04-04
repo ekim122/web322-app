@@ -23,7 +23,6 @@ let User; // to be defined on new connection (see initialize)
 //initialize
 module.exports.initialize = function () {
     return new Promise(function (resolve, reject) {
-        //let db = mongoose.createConnection("mongodb+srv://dbUser:dbUser2022@senecaweb.k3enu.mongodb.net/web322-app?retryWrites=true&w=majority");
         let db = mongoose.createConnection(process.env.MONGO_CONNECT);
         db.on('error', (err)=>{
             reject(err); // reject the promise with the provided error
@@ -62,19 +61,6 @@ module.exports.registerUser = function(userData){
             .catch((err)=>{
                 reject("There was an error encrypting the password")
             })
-            // userData.password = hash
-            // let newUser = new User(userData)
-            // newUser.save((err)=>{
-            //     if (err) {
-            //         if (err.code == 11000){
-            //             reject("User Name already taken")
-            //         }
-            //         reject("There was an error creating the user: " + err)
-            //     }
-            //     else{
-            //         resolve()
-            //     }
-            // })
         }
     })
 }

@@ -4,7 +4,7 @@
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Eun Dong Kim    Student ID: 144692209   Date: Mar 31, 2022
+*  Name: Eun Dong Kim    Student ID: 144692209   Date: Apr 3, 2022
 *
 *  Online (Heroku) URL: https://aqueous-garden-50159.herokuapp.com/
 *
@@ -442,9 +442,6 @@ app.use(function(req,res){
 blogService.initialize()
 .then(authData.initialize)
 .then(function(){
-    // app.listen(HTTP_PORT, function(){
-    //     console.log("app listening on: " + HTTP_PORT)
-    // });
     app.listen(HTTP_PORT, onHttpStart);
 }).catch(function(err){
     console.log("unable to start server: " + err);
