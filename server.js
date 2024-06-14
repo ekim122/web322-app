@@ -25,7 +25,8 @@ const onHttpStart = () => console.log(`Express http server listening on: ${HTTP_
 const multer = require("multer");
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
-app.use(express.static('public'));
+//app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 const stripJs = require('strip-js');
 app.use(express.urlencoded({extended: true}));
 app.use(clientSessions({
@@ -72,7 +73,9 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                             let day = dateObj.getDate().toString();
                                             return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;}                
                                 }}));
-app.set('view engine', '.hbs');
+//app.set('view engine', '.hbs');
+app.set('view engine', __dirname + '.hbs');
+
 // ====================================================================
 
 
