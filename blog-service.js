@@ -7,7 +7,6 @@ const Sequelize = require('sequelize');
 var sequelize = new Sequelize(process.env.VERCEL_DATABASE, process.env.VERCEL_USER, process.env.VERCEL_PASS, {
     host: process.env.VERCEL_HOST,
     dialect: 'postgres',
-    //port: process.env.VERCEL_PORT,
     dialectOptions: {
         ssl: { rejectUnauthorized: false }
     },

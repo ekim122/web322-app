@@ -6,7 +6,7 @@
 * 
 *  Name: Eun Dong Kim    Student ID: 144692209   Date: Apr 3, 2022
 *
-*  Online (Heroku) URL: https://radiant-ravine-13830.herokuapp.com/
+*  Online (Vercel) URL: https://web322-app-iota.vercel.app/
 *
 *  GitHub Repository URL: https://github.com/ekim122/web322-app
 *
@@ -75,7 +75,6 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                 }}));
 app.set('views', __dirname + '/views');
 app.set('view engine', '.hbs');
-//app.set('view engine', __dirname + '.hbs');
 
 // ====================================================================
 
