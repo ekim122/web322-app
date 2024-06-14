@@ -4,15 +4,15 @@ env.config()
 require('pg')
 const Sequelize = require('sequelize');
 
-// var sequelize = new Sequelize(process.env.HEROKU_DATABASE, process.env.HEROKU_USER, process.env.HEROKU_PASS, {
-//     host: process.env.HEROKU_HOST,
-//     dialect: 'postgres',
-//     port: process.env.HEROKU_PORT,
-//     dialectOptions: {
-//         ssl: { rejectUnauthorized: false }
-//     },
-//     query: { raw: true }
-// });
+var sequelize = new Sequelize(process.env.VERCEL_DATABASE, process.env.VERCEL_USER, process.env.VERCEL_PASS, {
+    host: process.env.VERCEL_HOST,
+    dialect: 'postgres',
+    //port: process.env.VERCEL_PORT,
+    dialectOptions: {
+        ssl: { rejectUnauthorized: false }
+    },
+    query: { raw: true }
+});
 
 
 const Post = sequelize.define('Post',{
