@@ -1,7 +1,7 @@
 const env = require("dotenv")
 env.config()
 
-require('pg')
+//require('pg')
 const Sequelize = require('sequelize');
 
 var sequelize = new Sequelize(process.env.VERCEL_DATABASE, process.env.VERCEL_USER, process.env.VERCEL_PASS, {
