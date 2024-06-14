@@ -73,6 +73,7 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs',
                                             let day = dateObj.getDate().toString();
                                             return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;}                
                                 }}));
+app.set('views', __dirname + '/views');
 app.set('view engine', '.hbs');
 //app.set('view engine', __dirname + '.hbs');
 
